@@ -26,12 +26,16 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
 
             // Go back to LoginActivity
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
             finish();
         });
         Button profileSettingsButton = findViewById(R.id.profileSettingsButton);
         profileSettingsButton.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ProfileSettingsActivity.class));
+            Intent intent = new Intent(MainActivity.this, ProfileSettingsActivity.class);
+            intent.putExtra("username", getIntent().getStringExtra("username"));
+            startActivity(intent);
+
         });
     }
 }
