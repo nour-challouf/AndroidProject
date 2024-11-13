@@ -31,6 +31,8 @@
 
         <!-- Ajout de l'activité AddRestaurantActivity -->
         <activity android:name=".AddRestaurantActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".OrdersActivity" />
 
         <!-- Ajout de l'activité MenuActivity -->
         <activity android:name=".MenuActivity" />

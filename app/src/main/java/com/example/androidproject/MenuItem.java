@@ -1,26 +1,37 @@
 package com.example.androidproject;
 
-public class MenuItem {
-    private String name;
-    private double price;
-    private String imageUrl;  // URL ou chemin de l'image
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    public MenuItem(String name, double price, String imageUrl) {
-        this.name = name;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "menu",
+        foreignKeys = @ForeignKey(entity = Restaurant.class,
+                parentColumns = "id",
+                childColumns = "restaurantId",
+                onDelete = ForeignKey.CASCADE))
+public class MenuItem  {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    public String menuItem;
+    public double price;
+    public int restaurantId;
+    public String imageUrl;
+
+    public MenuItem(String menuItem, double price, int restaurantId) {
+        this.menuItem = menuItem;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.restaurantId = restaurantId;
     }
 
-    // Getter et setter pour le nom, le prix et l'URL de l'image
-    public String getName() {
-        return name;
+    protected MenuItem(Parcel in) {
+        id = in.readInt();
+        menuItem = in.readString();
+        price = in.readDouble();
+        restaurantId = in.readInt();
+        imageUrl = in.readString();
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
 }

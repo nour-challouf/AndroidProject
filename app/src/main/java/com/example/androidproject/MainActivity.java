@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         Button profileSettingsButton = findViewById(R.id.profileSettingsButton);
         profileSettingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ProfileSettingsActivity.class);
+
+            intent.putExtra("userId", getIntent().getIntExtra("userId",-1));
             intent.putExtra("username", getIntent().getStringExtra("username"));
             startActivity(intent);
         });
@@ -44,6 +46,28 @@ public class MainActivity extends AppCompatActivity {
         restaurantListButton.setOnClickListener(v -> {
             // Ouvrir l'activité contenant la liste des restaurants
             Intent intent = new Intent(MainActivity.this, RestaurantMainActivity.class);
+            intent.putExtra("userId", getIntent().getStringExtra("userId"));
+            startActivity(intent);
+        });
+// Inside onCreate method of MainActivity
+        Button ordersButton = findViewById(R.id.ordersButton);
+        ordersButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, OrdersActivity.class);
+            intent.putExtra("userId", getIntent().getIntExtra("userId", -1));
+            startActivity(intent);
+        });
+        Button feedbackButton = findViewById(R.id.feedbackButton);
+        feedbackButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
+            intent.putExtra("userId", getIntent().getStringExtra("userId"));
+            startActivity(intent);
+        });
+
+        // Ajouter le bouton Voir le Panier
+        Button viewCartButton = findViewById(R.id.viewCartButton);
+        viewCartButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CartActivity.class);
+            intent.putExtra("userId", getIntent().getIntExtra("userId",-1));
             startActivity(intent);
         });
     }

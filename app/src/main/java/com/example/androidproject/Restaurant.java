@@ -1,18 +1,27 @@
 package com.example.androidproject;
 
-public class Restaurant {
-    private int id;
-    private String name;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    // Constructeur
-    public Restaurant(int id, String name) {
-        this.id = id;
-        this.name = name;
+@Entity(tableName = "restaurants")
+public class Restaurant {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    public String name;
+
+    public int getId() {
+        return id;
     }
 
-    // Getters et Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
