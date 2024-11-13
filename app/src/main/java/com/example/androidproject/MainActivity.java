@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean(KEY_LOGGED_IN, false);
             editor.apply();
-
+            CartManager.getInstance().clearCart();
             // Retour à LoginActivity
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -71,11 +71,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        Button feedbackButton = findViewById(R.id.feedbackButton);
-        feedbackButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
-            startActivity(intent);
-        });
 
     }
 }
