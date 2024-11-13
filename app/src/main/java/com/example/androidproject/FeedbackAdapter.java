@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,9 +18,13 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
 
     private List<Feedback> feedbackList;
 
-    public FeedbackAdapter(List<Feedback> feedbackList) {
+    private FeedbackActivity feedbackActivity;
+
+    public FeedbackAdapter(FeedbackActivity feedbackActivity, List<Feedback> feedbackList) {
+        this.feedbackActivity = feedbackActivity;
         this.feedbackList = feedbackList;
     }
+
 
     @NonNull
     @Override
@@ -32,9 +37,8 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
     public void onBindViewHolder(@NonNull FeedbackViewHolder holder, int position) {
         Feedback feedback = feedbackList.get(position);
         holder.feedbackText.setText(feedback.getFeedbackText());
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        holder.feedbackTimestamp.setText(sdf.format(feedback.getTimestamp()));
+        holder.feedbackTimestamp.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(feedback.getTimestamp()));
+        holder.displayRatingBar.setRating(feedback.getRating());
 
         // Set delete button functionality with confirmation dialog
         holder.deleteButton.setOnClickListener(v -> {
@@ -53,28 +57,38 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
 
         // Set edit button functionality with an input dialog
         holder.editButton.setOnClickListener(v -> {
-            // Show an input dialog to edit the feedback
+            // Show an input dialog to edit the feedback text and rating
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
             builder.setTitle("Edit Feedback");
 
-            // Set up the input
-            final EditText input = new EditText(v.getContext());
-            input.setText(feedback.getFeedbackText());
-            builder.setView(input);
+            // Inflate a custom layout for editing feedback and rating
+            View editView = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_edit_feedback, null);
+            EditText inputText = editView.findViewById(R.id.editFeedbackText);
+            RatingBar inputRatingBar = editView.findViewById(R.id.editRatingBar);
 
-            // Set up the buttons
+            // Set current feedback text and rating
+            inputText.setText(feedback.getFeedbackText());
+            inputRatingBar.setRating(feedback.getRating());
+
+            builder.setView(editView);
+
             builder.setPositiveButton("Save", (dialog, which) -> {
-                String updatedText = input.getText().toString();
+                String updatedText = inputText.getText().toString();
+                float updatedRating = inputRatingBar.getRating();
                 if (!updatedText.isEmpty()) {
                     feedback.setFeedbackText(updatedText);  // Update feedback text
+                    feedback.setRating(updatedRating);  // Update feedback rating
                     notifyItemChanged(position);  // Notify adapter about item update
+                    feedbackActivity.updateAverageRating(); // Update the average rating display
                 }
             });
             builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
             builder.show();
         });
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -84,11 +98,13 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
     static class FeedbackViewHolder extends RecyclerView.ViewHolder {
         TextView feedbackText, feedbackTimestamp;
         Button deleteButton, editButton;
+        RatingBar displayRatingBar;
 
         public FeedbackViewHolder(@NonNull View itemView) {
             super(itemView);
             feedbackText = itemView.findViewById(R.id.feedbackText);
             feedbackTimestamp = itemView.findViewById(R.id.feedbackTimestamp);
+            displayRatingBar = itemView.findViewById(R.id.displayRatingBar); // Initialize the rating bar
             deleteButton = itemView.findViewById(R.id.deleteButton);
             editButton = itemView.findViewById(R.id.editButton);
         }
