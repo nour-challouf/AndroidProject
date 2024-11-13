@@ -12,17 +12,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidProject"
         tools:targetApi="31">
-        <activity android:name=".MainActivity" />
 
+        <!-- LoginActivity de votre ami est la première activité lancée -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- MainActivity de votre ami (après connexion) -->
+        <activity android:name=".MainActivity" />
+
+        <!-- Votre propre MainActivity, renommée pour éviter les conflits -->
+        <activity android:name=".RestaurantMainActivity" />
+
+        <!-- Ajout de l'activité AddRestaurantActivity -->
+        <activity android:name=".AddRestaurantActivity" />
+
+        <!-- Ajout de l'activité MenuActivity -->
+        <activity android:name=".MenuActivity" />
+
+        <!-- Ajout de l'activité AddMenuItemActivity -->
+        <activity android:name=".AddMenuItemActivity" />
+
+        <!-- Autres activités existantes -->
         <activity android:name=".SignupActivity" />
         <activity android:name=".ProfileSettingsActivity" />
 
