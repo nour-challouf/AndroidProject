@@ -70,5 +70,12 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("userId", getIntent().getIntExtra("userId",-1));
             startActivity(intent);
         });
+
+        Button feedbackButton = findViewById(R.id.feedbackButton);
+        feedbackButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
