@@ -1,0 +1,35 @@
+<!-- res/layout/activity_add_menu_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Champ pour le nom du plat -->
+    <EditText
+        android:id="@+id/menuItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nom du plat"
+        android:textSize="16sp"
+        android:padding="10dp"/>
+
+    <!-- Champ pour le prix -->
+    <EditText
+        android:id="@+id/menuItemPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Prix"
+        android:inputType="numberDecimal"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Bouton pour enregistrer -->
+    <Button
+        android:id="@+id/saveMenuItemBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enregistrer"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
