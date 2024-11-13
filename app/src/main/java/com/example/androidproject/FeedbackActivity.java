@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,9 @@ public class FeedbackActivity extends AppCompatActivity {
     private static List<Feedback> feedbackList = new ArrayList<>();
     private List<Feedback> filteredFeedbackList = new ArrayList<>(); // List to hold filtered feedback
 
+    private RatingBar ratingBar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +45,20 @@ public class FeedbackActivity extends AppCompatActivity {
         feedbackRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         feedbackRecyclerView.setAdapter(feedbackAdapter);
 
+        //Rarting Inze
+        ratingBar = findViewById(R.id.ratingBar);
+
+
         submitButton.setOnClickListener(view -> {
             String feedbackText = feedbackInput.getText().toString();
+            float rating = ratingBar.getRating(); // Get the rating
+
             if (!feedbackText.isEmpty()) {
-                Feedback feedback = new Feedback(feedbackText, System.currentTimeMillis());
+                Feedback feedback = new Feedback(feedbackText, System.currentTimeMillis(), rating);
                 feedbackList.add(feedback);  // Add feedback to the main list
                 updateFilteredList(""); // Update filtered list to include new feedback
                 feedbackInput.setText("");   // Clear input after submission
+                ratingBar.setRating(0); // Reset the rating after submission
                 Toast.makeText(this, "Feedback submitted!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Please enter feedback", Toast.LENGTH_SHORT).show();
