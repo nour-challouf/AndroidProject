@@ -47,6 +47,19 @@
             android:layout_height="wrap_content"
             android:text="Liste des Restaurants"
             android:layout_marginBottom="16dp" />
+        <Button
+            android:id="@+id/viewCartButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Cart"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/ordersButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Orders"
+            android:layout_marginBottom="16dp" />
 
         <Button
             android:id="@+id/feedbackButton"

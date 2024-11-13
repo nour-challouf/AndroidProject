@@ -1,32 +1,35 @@
 package com.example.androidproject;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class RestaurantMainActivity extends AppCompatActivity {
 
-    private DatabaseHelper dbHelper;
     private ListView restaurantListView;
     private Button addRestaurantBtn;
+
+    private RestaurantDao restaurantDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_restaurant);
 
-        dbHelper = new DatabaseHelper(this);
         restaurantListView = findViewById(R.id.restaurantListView);
         addRestaurantBtn = findViewById(R.id.addRestaurantBtn);
+
+        AppDatabase appDatabase = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
+        restaurantDao = appDatabase.restaurantDao();
 
         addRestaurantBtn.setOnClickListener(v -> {
             // Ouvrir une nouvelle activité pour ajouter un restaurant
@@ -37,27 +40,24 @@ public class RestaurantMainActivity extends AppCompatActivity {
     }
 
     private void loadRestaurants() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(DatabaseHelper.TABLE_RESTAURANTS,
-                new String[]{DatabaseHelper.COLUMN_ID, DatabaseHelper.COLUMN_NAME},
-                null, null, null, null, null);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Restaurant> restaurants = restaurantDao.getAllRestaurants();
+            List<String> restaurantNames = new ArrayList<>();
+            for (Restaurant restaurant : restaurants) {
+                restaurantNames.add(restaurant.name);
+            }
 
-        List<String> restaurantNames = new ArrayList<>();
-        if (cursor.moveToFirst()) {
-            do {
-                restaurantNames.add(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
+            runOnUiThread(() -> {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, restaurantNames);
+                restaurantListView.setAdapter(adapter);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, restaurantNames);
-        restaurantListView.setAdapter(adapter);
-
-        restaurantListView.setOnItemClickListener((parent, view, position, id) -> {
-            // Ouvrir l'activité du menu pour le restaurant sélectionné
-            Intent intent = new Intent(RestaurantMainActivity.this, MenuActivity.class);
-            intent.putExtra("restaurant_id", id);
-            startActivity(intent);
+                restaurantListView.setOnItemClickListener((parent, view, position, id) -> {
+                    // Ouvrir l'activité du menu pour le restaurant sélectionné
+                    Intent intent = new Intent(RestaurantMainActivity.this, MenuActivity.class);
+                    intent.putExtra("restaurant_id", restaurants.get(position).id);
+                    startActivity(intent);
+                });
+            });
         });
     }
 }

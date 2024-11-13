@@ -7,7 +7,8 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
-room = "2.5.0" # Use the latest version of Room
+room = "2.5.0"
+gson = "2.8.9" # Add Gson version
 
 [libraries]
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
@@ -20,7 +21,7 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" } # Add Gson library
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-
