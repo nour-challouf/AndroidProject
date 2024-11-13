@@ -18,9 +18,13 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
 
     private List<Feedback> feedbackList;
 
-    public FeedbackAdapter(List<Feedback> feedbackList) {
+    private FeedbackActivity feedbackActivity;
+
+    public FeedbackAdapter(FeedbackActivity feedbackActivity, List<Feedback> feedbackList) {
+        this.feedbackActivity = feedbackActivity;
         this.feedbackList = feedbackList;
     }
+
 
     @NonNull
     @Override
@@ -75,12 +79,14 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
                     feedback.setFeedbackText(updatedText);  // Update feedback text
                     feedback.setRating(updatedRating);  // Update feedback rating
                     notifyItemChanged(position);  // Notify adapter about item update
+                    feedbackActivity.updateAverageRating(); // Update the average rating display
                 }
             });
             builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
             builder.show();
         });
+
     }
 
 
