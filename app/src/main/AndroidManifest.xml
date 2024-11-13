@@ -42,6 +42,8 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".ProfileSettingsActivity" />
 
+        <activity android:name=".FeedbackActivity" android:exported="true" />
+
     </application>
 
 </manifest>
