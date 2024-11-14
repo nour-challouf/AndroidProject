@@ -43,6 +43,10 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".RestaurantMainActivity" />
         <activity android:name=".AddRestaurantActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".OrdersActivity" />
+
+        <!-- Ajout de l'activité MenuActivity -->
         <activity android:name=".MenuActivity" />
         <activity android:name=".AddMenuItemActivity" />
         <activity android:name=".SignupActivity" />
