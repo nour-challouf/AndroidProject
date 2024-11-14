@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginButton);
         signupLink = findViewById(R.id.signupLink);
-        mapLink = findViewById(R.id.mapLink);
 
         db = DatabaseClient.getInstance(this);
         userDao = db.getAppDatabase().userDao();
@@ -44,9 +43,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, SignupActivity.class));
         });
 
-        mapLink.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, MapsActivity.class));
-        });
 loadDeliveries();
         // Login Button Click Listener
         loginButton.setOnClickListener(v -> {

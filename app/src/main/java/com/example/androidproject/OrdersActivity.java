@@ -1,5 +1,6 @@
 package com.example.androidproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ public class OrdersActivity extends AppCompatActivity {
     private ListView ordersListView;
     private List<Order> orders;
     private int userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,13 @@ public class OrdersActivity extends AppCompatActivity {
                     public View getView(int position, View convertView, android.view.ViewGroup parent) {
                         View view = super.getView(position, convertView, parent);
                         Button deleteButton = view.findViewById(R.id.deleteButton);
+                        Button buttonConf = view.findViewById(R.id.buttonConf);
+                        buttonConf.setOnClickListener(v -> {
+                            startActivity(
+                                    new Intent
+                                            (OrdersActivity.this, MapsActivity.class))
+                            ;
+                        });
                         deleteButton.setOnClickListener(v -> {
                             Order order = orders.get(position);
                             Executors.newSingleThreadExecutor().execute(() -> {

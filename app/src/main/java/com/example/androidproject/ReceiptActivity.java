@@ -58,7 +58,7 @@ public class ReceiptActivity extends AppCompatActivity {
                     Toast.makeText(ReceiptActivity.this, "Confirmation Successful",
                             Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(ReceiptActivity.this,
-                            DeliveryListActivity.class));
+                            MainActivity.class));
                     finish();
                 });
 
