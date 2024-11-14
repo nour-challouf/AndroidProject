@@ -17,7 +17,7 @@ public class RestaurantMainActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
     private ListView restaurantListView;
-    private Button addRestaurantBtn;
+    private Button addRestaurantBtn,addlocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +27,16 @@ public class RestaurantMainActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         restaurantListView = findViewById(R.id.restaurantListView);
         addRestaurantBtn = findViewById(R.id.addRestaurantBtn);
+        addlocation = findViewById(R.id.addlocation);
+
 
         addRestaurantBtn.setOnClickListener(v -> {
             // Ouvrir une nouvelle activité pour ajouter un restaurant
             startActivity(new Intent(RestaurantMainActivity.this, AddRestaurantActivity.class));
+        });
+        addlocation.setOnClickListener(v -> {
+            // Ouvrir une nouvelle activité pour ajouter un restaurant
+            startActivity(new Intent(RestaurantMainActivity.this, RestaurantLocationActivity.class));
         });
 
         loadRestaurants();
